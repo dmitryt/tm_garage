@@ -1,5 +1,9 @@
 TaskManager::Application.routes.draw do
 
+  get "tasks/new"
+
+  get "tasks/edit"
+
   devise_for :users
 
   # The priority is based upon order of creation:
@@ -59,7 +63,9 @@ TaskManager::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 
-  resources :projects, :tasks
+  resources :projects do
+    resources :tasks
+  end
 
   root :to => 'projects#index'
 end
