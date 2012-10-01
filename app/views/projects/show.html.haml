@@ -1,5 +1,4 @@
-%h2 
-  = @project.title
+= @project.title
 = link_to 'edit', edit_project_path(@project)
 = link_to 'delete', project_path(@project), :method => :delete
 
@@ -7,6 +6,6 @@
 %br
 
 Tasks
-= link_to 'Add task', new_project_task_path
+= link_to 'Add task', new_project_task_path(@project)
 - @project.tasks.each do |t|
   = link_to t.title, project_task_path(t)
