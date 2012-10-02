@@ -6,6 +6,18 @@
 %br
 
 Tasks
-= link_to 'Add task', new_project_task_path(@project)
+%br
 - @project.tasks.each do |t|
-  = link_to t.title, project_task_path(t)
+  = t.title
+  = link_to 'Edit', edit_project_task_path(t.project_id, t.id)
+  = link_to 'Delete', project_task_path(t.project_id, t.id), :method => :delete
+  %br
+
+%br
+%h4
+  Add task form
+= form_for @project do |pf|
+  = pf.fields_for :tasks, @project.tasks.build do |f|
+    = f.label :title
+    = f.text_field :title
+    = f.submit

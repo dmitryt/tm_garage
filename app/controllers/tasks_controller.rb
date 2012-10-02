@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
 
-  before_filter :project
+  before_filter :set_project
 
   def new
+
   end
 
   def edit
@@ -33,7 +34,7 @@ class TasksController < ApplicationController
 
   private 
 
-  def project
+  def set_project
 	@project = Project.find(params[:project_id])
   end
 
