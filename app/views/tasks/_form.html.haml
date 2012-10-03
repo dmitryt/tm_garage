@@ -1,0 +1,6 @@
+= form_for @project do |pf|
+  = pf.fields_for :tasks, @task do |f|
+    = f.label :title
+    = f.text_field :title
+    %br
+    = f.submit
