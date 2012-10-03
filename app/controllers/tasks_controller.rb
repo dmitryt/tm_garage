@@ -3,7 +3,6 @@ class TasksController < ApplicationController
   before_filter :set_project
 
   def new
-
   end
 
   def edit

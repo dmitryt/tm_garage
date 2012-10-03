@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003085754) do
+ActiveRecord::Schema.define(:version => 20121003210520) do
+
+  create_table "priorities", :force => true do |t|
+    t.string  "title",   :limit => 10
+    t.string  "color",   :limit => 10
+    t.integer "user_id"
+  end
+
+  add_index "priorities", ["title"], :name => "index_priorities_on_title", :unique => true
 
   create_table "projects", :force => true do |t|
     t.string   "title",      :null => false
@@ -22,11 +30,11 @@ ActiveRecord::Schema.define(:version => 20121003085754) do
   create_table "tasks", :force => true do |t|
     t.string   "title",                          :null => false
     t.integer  "project_id"
-    t.integer  "priority",    :default => 0
     t.boolean  "finished",    :default => false
     t.date     "deadline_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "priority_id"
   end
 
   create_table "users", :force => true do |t|

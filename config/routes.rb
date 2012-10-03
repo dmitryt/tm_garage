@@ -1,9 +1,5 @@
 TaskManager::Application.routes.draw do
 
-  get "tasks/new"
-
-  get "tasks/edit"
-
   devise_for :users
 
   # The priority is based upon order of creation:
@@ -66,6 +62,8 @@ TaskManager::Application.routes.draw do
   resources :projects do
     resources :tasks
   end
+  
+  resources :priorities
 
   root :to => 'projects#index'
 end

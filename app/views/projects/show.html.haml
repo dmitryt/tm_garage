@@ -5,6 +5,15 @@
 %br
 %br
 
+Priorities
+%br
+- @priorities.each do |p|
+  = p.title
+  = link_to 'Edit', edit_priority_path(p)
+  = link_to 'Delete', priority_path(p), :method => :delete
+  %br
+
+
 Tasks
 %br
 - @project.tasks.each do |t|
@@ -15,9 +24,16 @@ Tasks
 
 %br
 %h4
+  Add priority form
+= form_for current_user.priorities.new do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.submit
+%br
+%h4
   Add task form
 = form_for @project do |pf|
-  = pf.fields_for :tasks, @project.tasks.build do |f|
+  = pf.fields_for :tasks, @project.tasks.new do |f|
     = f.label :title
     = f.text_field :title
     = f.submit

@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new(params[:project].merge({:user => current_user}))
     if @project.save
       redirect_to @project, :notice => 'Project was saved successfully'
     else
@@ -33,6 +33,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @priorities = current_user.priorities
   end
 
   def index
