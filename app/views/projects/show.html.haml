@@ -36,4 +36,5 @@ Tasks
   = pf.fields_for :tasks, @project.tasks.new do |f|
     = f.label :title
     = f.text_field :title
+    = f.collection_select(:priority_id, @priorities, :id, :title)
     = f.submit
