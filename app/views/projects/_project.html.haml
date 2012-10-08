@@ -1,0 +1,15 @@
+.b-project
+  .b-project-title
+    .i-list
+    .b-edit
+      .i-edit{:title => 'edit'}
+      .delimiter
+      .i-delete{:title => 'delete'}
+    = project.title
+  .b-project-task-add
+    .i-add
+    %input.b-input{:placeholder => 'Start typing here to create a task...'}
+    %button.b-add-btn
+      Add task
+  .b-project-task-list
+    = render :partial => '/tasks/task', :collection => project.tasks

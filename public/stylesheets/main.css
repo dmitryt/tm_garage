@@ -1,0 +1,10 @@
+html, body {
+	height: 100%;
+}
+
+.b-page {
+	background: url('/images/bgd.png') repeat-x;
+	background-color: #ba5d0c;
+	height: 100%;
+	position: relative;
+}

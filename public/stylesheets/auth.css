@@ -1,0 +1,13 @@
+.b-auth {
+	position: absolute;
+	top: 10%;
+	left: 50%;
+	margin-left: -150px;
+	width: 300px;
+	background-color: #fff;
+	border: 10px solid #fff;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-o-border-radius: 10px;
+}

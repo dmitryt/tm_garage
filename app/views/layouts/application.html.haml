@@ -7,10 +7,11 @@
   = javascript_include_tag :defaults
   = csrf_meta_tag
   %body
-    - if current_user
-      .b-head
-        You are logged in as 
-        = link_to(current_user.username, edit_user_registration_path)
-        |
-        = link_to('logout', destroy_user_session_path)
-    = yield
+    .b-page
+      - if current_user
+        .b-head
+          You are logged in as 
+          = link_to(current_user.username, edit_user_registration_path)
+          |
+          = link_to('logout', destroy_user_session_path)
+      = yield
