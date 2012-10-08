@@ -6,5 +6,39 @@ html, body {
 	background: url('/images/bgd.png') repeat-x;
 	background-color: #ba5d0c;
 	height: 100%;
+	min-height: 700px;
 	position: relative;
+	z-index: 1;
+}
+	
+.b-page-title {
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.b-page-title .sub {
+	font-size: 0.6em;
+	font-weight: normal;
+}
+
+.b-head {
+	height: 1.5em;
+	line-height: 1.5em;
+	text-align: right;
+	padding-right: 10px;
+}
+
+.b-footer {
+	height: 100px;
+	margin-top: -100px;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+}
+
+.b-footer .copy {
+	color: #fff;
+	margin-top: 15px;
 }

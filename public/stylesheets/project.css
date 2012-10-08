@@ -14,21 +14,21 @@
 .b-project .i-delete,
 .b-project .i-change-priority {
 	background-image: url('/images/glyphicons-halflings.png');
-	width: 16px;
-	height: 16px;
+	width: 14px;
+	height: 14px;
 	display: inline-block;
 }
 
 .b-project .i-edit {
-	background-position: 0 -70px;
+	background-position: 0 -72px;
 }
 
 .b-project .i-delete {
-	background-position: 15px 0;
+	background-position: 13px 0;
 }
 
 .b-project .i-change-priority {
-	background-position: 40px -120px;
+	background-position: 37px -120px;
 }
 
 .b-project-title {
@@ -86,7 +86,8 @@
 	line-height: 26px;
 }
 
-.b-project-task-add .i-add {
+.b-project-task-add .i-add,
+.b-project-add-btn i {
 	width: 26px;
 	height: 26px;
 	background-image: url('/images/big_icons.png');
@@ -123,6 +124,10 @@
 	background: -moz-linear-gradient(top,  #8cc3a6,  #508767); /* for firefox 3.6+ */
 }
 
+.b-project-task-list {
+	min-height: 51px;
+}
+
 .b-project-task-list .b-row {
 	font-weight: bold;
 	font-size: 14px;
@@ -144,18 +149,22 @@
 	border-left: 1px solid #efdadf;
 	border-right: 1px solid #e7ebea;
 	margin-left: 50px;
-	margin-right: 70px;
+	margin-right: 90px;
 	padding-left: 10px;
 }
 
 .b-project-task-list .b-edit {
-	/* visibility: hidden;*/
+	visibility: hidden;
 	float: right;
+	padding: 0 10px;
 	width: 70px;
 }
 
 .b-project-task-list .b-edit .delimiter {
 	display: inline-block;
+	width: 1px;
+	height: 15px;
+	background-color: #999;
 }
 
 .b-project-task-list .b-row:hover {
@@ -164,4 +173,24 @@
 
 .b-project-task-list .b-row:hover .b-edit {
 	visibility: visible;
+}
+
+/* Add btn */
+.b-project-add-btn {
+	font-size: 1.3333em;
+	line-height: 2.5em;
+	padding: 0 30px 0 45px;
+	position: relative;
+	color: #fff;
+	cursor: pointer;
+	background: #3c6aa8; /* for non-css3 browsers */
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5280b9', endColorstr='#3c5c9d'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#5280b9), to(#3c5c9d)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #5280b9,  #3c5c9d); /* for firefox 3.6+ */	
+}
+
+.b-project-add-btn i {
+	left: 10px;
+	top: 10px;
 }

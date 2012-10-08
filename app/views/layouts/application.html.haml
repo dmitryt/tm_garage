@@ -14,4 +14,14 @@
           = link_to(current_user.username, edit_user_registration_path)
           |
           = link_to('logout', destroy_user_session_path)
+      .b-page-title
+        simple todo lists
+        .sub
+          from ruby garage
       = yield
+    .b-footer
+      %button.b-project-add-btn
+        %i
+        Add TODO list
+      .copy
+        &copy;&nbsp;Ruby Garage

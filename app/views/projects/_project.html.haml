@@ -12,4 +12,5 @@
     %button.b-add-btn
       Add task
   .b-project-task-list
-    = render :partial => '/tasks/task', :collection => project.tasks
+    = render(:partial => '/tasks/task', :collection => project.tasks) || "There list of tasks is empty"
+      
