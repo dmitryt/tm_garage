@@ -13,7 +13,7 @@
 .b-project .i-edit,
 .b-project .i-delete,
 .b-project .i-change-priority {
-	background-image: url('/images/glyphicons-halflings.png');
+	background-image: url(<%= asset_path 'glyphicons-halflings.png' %>);
 	width: 14px;
 	height: 14px;
 	display: inline-block;
@@ -48,7 +48,8 @@
 .b-project-title .b-edit {
 	position: absolute;
 	right: 10px;
-	top: 5px;
+	top: 5%;
+	height: 95%;
 	visibility: hidden;
 }
 
@@ -58,7 +59,7 @@
 
 .b-project-title .delimiter {
 	display: inline-block;
-	height: 20px;
+	height: 15px;
 	margin: 0 5px;
 	width: 1px;
 	background-color: #999;
@@ -69,7 +70,7 @@
 	width: 24px;
 	height: 28px;
 	left: 10px;
-	background-image: url('/images/big_icons.png');
+	background-image: url(<%= asset_path 'big_icons.png' %>);
 	top: 5px;
 }
 
@@ -90,7 +91,7 @@
 .b-project-add-btn i {
 	width: 26px;
 	height: 26px;
-	background-image: url('/images/big_icons.png');
+	background-image: url(<%= asset_path 'big_icons.png' %>);
 	background-position: 0 -28px;
 	position: absolute;
 	margin-top: 3px;
