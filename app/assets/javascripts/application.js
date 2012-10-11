@@ -5,5 +5,10 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery_ujs
+//= require jquery.ui.widget
+//= require lib/manager 
+//= require lib/base
 //= require lib/project
+
+//= require templates/project
+//= require templates/task

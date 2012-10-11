@@ -1,0 +1,11 @@
+.b-row
+  .b-checkbox
+    %input{type: 'checkbox'}
+  .b-edit
+    .i-change-priority{title: 'change priority'}
+    .delimiter
+    .i-edit{title: 'edit'}
+    .delimiter
+    .i-delete{title: 'delete'}
+  .b-title
+    = title

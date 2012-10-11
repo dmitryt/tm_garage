@@ -1,5 +1,3 @@
-( ($) ->
-	klass = (options) ->
-		
-	$.widget "ui.Project", $.ui.Base, klass
-) jQuery
+klass = (options) ->
+
+$.widget "tm.ui.Project", $.tm.ui.Base, klass
