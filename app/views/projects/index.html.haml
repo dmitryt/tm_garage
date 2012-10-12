@@ -1,7 +1,7 @@
 - content_for :script do
   :javascript
     $(document).ready(function(){
-      console.log('inited');
+      new tm.Manager(#{@projects.to_json(:include => :tasks)});
     });
 
 = link_to 'Create project', new_project_path

@@ -6,9 +6,11 @@
 //
 //= require jquery
 //= require jquery.ui.widget
+//= require lib/util
 //= require lib/manager 
-//= require lib/base
+//= require lib/_templated
 //= require lib/project
+//= require lib/task
 
 //= require templates/project
 //= require templates/task

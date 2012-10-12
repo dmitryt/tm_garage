@@ -11,5 +11,5 @@
     %input.b-input{placeholder: 'Start typing here to create a task...'}
     %button.b-add-btn
       Add task
-  .b-project-task-list
+  .b-project-task-list{data-attach-point: 'tasksContainer'}
       
