@@ -2,10 +2,10 @@
   .b-checkbox
     %input{type: 'checkbox'}
   .b-edit
-    .i-change-priority{title: 'change priority'}
+    .i-change-priority{title: 'change priority', data-attach-event: 'click: onChangePriority'}
     .delimiter
-    .i-edit{title: 'edit'}
+    .i-edit{title: 'edit', data-attach-event: 'click: onEdit'}
     .delimiter
-    .i-delete{title: 'delete'}
+    .i-delete{title: 'delete', data-attach-event: 'click: onDelete'}
   .b-title
     = title

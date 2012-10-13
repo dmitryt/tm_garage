@@ -4,6 +4,11 @@
       new tm.Manager(#{@projects.to_json(:include => :tasks)});
     });
 
+- content_for :footer do
+  %button.b-project-add-btn
+    %i
+    Add TODO list
+
 = link_to 'Create project', new_project_path
 %br/ 
 %br/

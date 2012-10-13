@@ -5,10 +5,13 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery.ui.widget
+//= require jquery.ui.dialog
+ 
 //= require lib/util
-//= require lib/manager 
 //= require lib/_templated
+//= require lib/form_dialog
+//= require lib/manager 
+
 //= require lib/project
 //= require lib/task
 

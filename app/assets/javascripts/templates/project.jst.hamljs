@@ -2,9 +2,9 @@
   .b-project-title
     .i-list
     .b-edit
-      .i-edit{title: 'edit'}
+      .i-edit{title: 'edit', data-attach-event: 'click: onEdit'}
       .delimiter
-      .i-delete{title: 'delete'}
+      .i-delete{title: 'delete', data-attach-event: 'click: onDelete'}
     = title
   .b-project-task-add
     .i-add

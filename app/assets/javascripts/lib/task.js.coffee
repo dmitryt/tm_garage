@@ -1,5 +1,15 @@
-klass = 
+class Task extends tm._Templated
 	options: 
 		template: 'templates/task'
 
-$.widget "tm.Task", $.tm._Templated, klass
+	onEdit: ->
+		console.log('onEdit')
+
+	onDelete: ->
+		console.log('onDelete')
+
+	onChangePriority: ->
+		console.log('onChangePriority')
+
+namespace 'tm', (exports) ->
+	exports.Task = Task
