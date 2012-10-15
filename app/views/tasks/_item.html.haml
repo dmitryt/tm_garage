@@ -1,0 +1,11 @@
+.b-row{'data-attach-widget'=> "Task_#{item.id}"}
+  .b-checkbox
+    %input{:type => 'checkbox'}
+  .b-edit
+    .i-change-priority{:title => 'change priority', 'data-attach-event' => 'click: onChangePriority'}>
+    .delimiter>
+    .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit'}>
+    .delimiter>
+    .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete'}>
+  .b-title
+    = item.title

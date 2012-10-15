@@ -1,9 +1,21 @@
 class Task extends tm._Templated
 	options: 
-		template: 'templates/task'
+		template: 'task'
+		form: '#taskForm'
+
+	constructor: (options) ->
+		Task.form ?= $($(@options.form).html())
+		super(options)
 
 	onEdit: ->
-		console.log('onEdit')
+		@options.dialog.open
+			title: 'Edit task'
+			Task.form 
+			@options.data
+			@onSave
+
+	onSave: ->
+		console.log('onSave task')
 
 	onDelete: ->
 		console.log('onDelete')

@@ -1,24 +1,45 @@
 class _Templated
 	mainContainer: '#page'
 
-	constructor: (options = {}, @element, @engine = JST) ->
-		@options = $.extend {}, @options, options
-		if !@element
-			@element = $(@engine[@options.template](@options.data))
-		@element.appendTo(@options.attachNode || @mainContainer)
+	_options: 
+		template: null
+		data: {}
+
+	dataAttrs:
+		widget: 'data-attach-widget'
+		point: 'data-attach-point'
+		event: 'data-attach-event'
+		name: 'data-name'
+
+	initSubwidgets: ->
+		# could be redefined in children classes
+
+	constructor: (options = {}, @element) ->
+		@options = $.extend {}, @_options, @options, options
+		@_initElement()
+		@initSubwidgets()
 		@_parseEvents()
 		@_parseNodes()
+		$(@element).removeAttr(@dataAttrs.widget)
+
+	isNew: ->
+		return !@options.data.id				
+
+	_initElement: ->
+		return true if @element
+		if !@isNew()
+			@element = $("[#{@dataAttrs.widget}=\"#{@constructor.name}_#{@options.data.id}\"]")
+			return true
+		@element = $(@options.template).appendTo(@options.attachNode || @mainContainer)
 
 	_parseNodes: ->
-		attr = 'data-attach-point'
 		iterator = (node) ->
-			@[$.attr(node, attr)] = node
-		@_parse(attr, iterator)
+			@[$.attr(node, @dataAttrs.point)] = node
+		@_parse(@dataAttrs.point, iterator)
 
 	_parseEvents: ->
-		attr = 'data-attach-event'
 		iterator = (node) ->
-			pairs = $.attr(node, attr).split(',')
+			pairs = $.attr(node, @dataAttrs.event).split(',')
 			for pair in pairs
 				do(pair) =>
 					_pair = pair.split(':')
@@ -26,7 +47,7 @@ class _Templated
 					handler = $.trim(_pair[1])
 					$(node)[event] =>
 						@[handler]()
-		@_parse(attr, iterator)
+		@_parse(@dataAttrs.event, iterator)
 
 	_parse: (attr, iterator) ->
 		for node in $(@element).find("[#{attr}]")

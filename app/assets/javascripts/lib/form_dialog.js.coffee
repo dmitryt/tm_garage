@@ -6,8 +6,9 @@ class FormDialog extends tm._Templated
 		draggable: false
 		autoOpen: false
 
-	constructor: (@options, @element = $('#dialog'), @engine) ->
-		super(@options, @element, @engine)
+	constructor: (@options, @element) ->
+		@dialog = $('#dialog')
+		super
 		@init()
 
 	init: ->
@@ -15,19 +16,29 @@ class FormDialog extends tm._Templated
 			"save": => @onSave()
 			"cancel": => @close()
 		@_apply @dOptions
+
+	setForm: (@form, data = {}) ->
+		@reset()
+		attr = @dataAttrs.name
+		@form.find("[#{attr}]").map (i, node) ->
+			v = data[$(node).attr(attr)]
+			$(node).val(v)
+		@dialog.append(@form)
 	
-	open: (args, form) ->
+	open: (args, form, data = {}, @onSave = ->) ->
+		debugger
+		@setForm(form, data)
 		@_apply $.extend({}, @dOptions, args)
 		@_apply 'open'
+
+	reset: ->
+		@dialog.empty()
 
 	close: ->
 		@_apply 'close'
 
 	_apply: (something) ->
-		$(@element).dialog(something)
-
-	onSave: -> 
-		console.log('onSave')
+		@dialog.dialog(something)
 
 namespace 'tm', (exports) ->
 	exports.FormDialog = FormDialog

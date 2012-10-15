@@ -5,12 +5,16 @@ gem 'rails'
 gem 'devise'
 gem 'sass-rails'
 gem 'haml-rails'
-gem 'ruby-haml-js'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'therubyracer'
 gem 'uglifier'
+
+group :assets do
+  gem 'haml_coffee_assets'
+  gem 'execjs'
+end
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

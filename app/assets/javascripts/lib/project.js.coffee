@@ -1,15 +1,20 @@
 class Project extends tm._Templated
 
 	options: 
-		template: 'templates/project'
+		template: 'project'
+		form: '#projectForm'
+		data: {}
 
 	tasks: []
 
-	constructor: ->
-		super
-		@_createTasks()
+	constructor: (options) ->
+		Project.form ?= $($(@options.form).html())
+		super(options)
 
-	_createTasks: ->
+	initSubwidgets: ->
+		@_initTasks() if !@isNew()
+
+	_initTasks: ->
 		@tasks = @options.data.tasks.map (data) =>
 			@_renderTask data
 
@@ -17,10 +22,18 @@ class Project extends tm._Templated
 		new tm.Task
 			data: data
 			attachNode: @tasksContainer
-			dialog: @dialog
+			dialog: @options.dialog
 
 	onEdit: ->
-		@options.dialog.open({title: 'Edit project'})
+		debugger
+		@options.dialog.open
+			title: 'Edit project'
+			Project.form 
+			@options.data
+			@onSave
+
+	onSave: ->
+		console.log('onSave')
 
 	onDelete: ->
 		console.log('onDelete')

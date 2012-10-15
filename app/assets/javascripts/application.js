@@ -3,17 +3,12 @@
 // be included in the compiled file accessible from http://example.com/assets/application.js
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
-//
+
+//= require hamlcoffee
+
 //= require jquery
 //= require jquery.ui.dialog
- 
+
 //= require lib/util
-//= require lib/_templated
-//= require lib/form_dialog
-//= require lib/manager 
-
-//= require lib/project
-//= require lib/task
-
-//= require templates/project
-//= require templates/task
+//= require_tree ./lib
+//= require_tree ./templates
