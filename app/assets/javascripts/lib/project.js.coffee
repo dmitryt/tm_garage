@@ -1,37 +1,20 @@
 class Project extends tm._Templated
 
-	options: 
-		template: 'project'
-		form: '#projectForm'
-		data: {}
-
-	@url: '/projects'
-
 	tasks: []
 
-	constructor: (options) ->
-		Project.form ?= $($(@options.form).html())
-		super(options)
-
 	initSubwidgets: ->
-		@_initTasks() if !@isNew()
+		@_initTasks()
 
 	_initTasks: ->
-		@tasks = @options.data.tasks.map (data) =>
-			@_renderTask data
+		wNodes = $(@options.dom).find('[data-attach-widget="tm.Task"]')
+		@tasks = (@createTask(node) for node in wNodes)
 
-	_renderTask: (data) ->
-		new tm.Task
-			data: data
-			attachNode: @tasksContainer
-			dialog: @options.dialog
+	createTask: (dom) ->
+		new tm.Task {dialog: @options.dialog, attachNode: @tasksContainer}, dom
+			
 
-	onEdit: ->
-		@options.dialog.open
-			title: 'Edit project'
-			Project.form 
-			@options.data
-			@onSave
+	onEdit: (target) ->
+		@options.dialog.open target, {title: 'Edit project'}, @onSave
 
 	onSave: ->
 		console.log('onSave')

@@ -1,13 +1,7 @@
 - content_for :script do
-  - new_project = Project.new(:title => '')
-  - new_task = new_project.tasks.new(:title => '')
-  %script{:type => 'text/template', :id => 'project'}
-    = render :partial => 'projects/item', :object => new_project
-  %script{:type => 'text/template', :id => 'task'}
-    = render :partial => 'tasks/item', :object => new_task
   :javascript
     $(document).ready(function(){
-      new tm.Manager(#{@projects.to_json(:include => :tasks)});
+      new tm.Manager();
     });
 
 - content_for :footer do

@@ -8,7 +8,6 @@ class FormDialog extends tm._Templated
 
 	constructor: (@options, @element) ->
 		@dialog = $('#dialog')
-		@saveBtn = 
 		super
 		@init()
 
@@ -18,15 +17,19 @@ class FormDialog extends tm._Templated
 			"cancel": => @close()
 		@_apply @dOptions
 
-	setForm: (@form, data = {}) ->
+	setForm: (@form) ->
 		@reset()
 		@form.submit -> false
 		@dialog.append(@form)
 	
-	open: (args, form, @onSave = ->) ->
-		@setForm(form)
-		@_apply $.extend({}, @dOptions, args)
-		@_apply 'open'
+	open: (opener, options = {}, @onSave = =>) ->
+		return if !opener
+		df = $.ajax
+			url: $(opener).attr('data-url')
+		df.done (form) =>
+			@_apply $.extend({}, @dOptions, options)
+			@setForm $(form)
+			@_apply 'open'
 
 	reset: ->
 		@dialog.empty()
@@ -34,10 +37,19 @@ class FormDialog extends tm._Templated
 	close: ->
 		@_apply 'close'
 
+	onSave: ->
+
 	_onSave: ->
 		btns = $(@dialog.get(0).parentNode).find('button')
 		btns.attr('disabled', 'disabled')
-		df = @onSave(@form)
+		debugger
+		df = $.ajax
+			url: @form.attr('action')
+			type: @form.attr('method')
+			data: @form.serialize()
+		df.done (response) =>
+			@onSave(response)
+			@close()
 		df.always -> btns.removeAttr('disabled')
 			
 

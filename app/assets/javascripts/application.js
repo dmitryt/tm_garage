@@ -4,11 +4,8 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 
-//= require hamlcoffee
-
 //= require jquery
 //= require jquery.ui.dialog
 
 //= require lib/util
 //= require_tree ./lib
-//= require_tree ./templates

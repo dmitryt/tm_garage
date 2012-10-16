@@ -1,9 +1,9 @@
-.b-project{'data-attach-widget'=> "Project_#{item.id}"}
+.b-project{'data-attach-widget'=> "tm.Project"}
   .b-project-title
     = item.title
     .i-list
     .b-edit
-      .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit'}
+      .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit', 'data-url'=> edit_project_path(item)}
       .delimiter
       .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete'}
   .b-project-task-add

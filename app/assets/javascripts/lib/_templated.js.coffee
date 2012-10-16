@@ -16,21 +16,9 @@ class _Templated
 
 	constructor: (options = {}, @element) ->
 		@options = $.extend {}, @_options, @options, options
-		@_initElement()
 		@initSubwidgets()
 		@_parseEvents()
 		@_parseNodes()
-		$(@element).removeAttr(@dataAttrs.widget)
-
-	isNew: ->
-		return !@options.data.id				
-
-	_initElement: ->
-		return true if @element
-		if !@isNew()
-			@element = $("[#{@dataAttrs.widget}=\"#{@constructor.name}_#{@options.data.id}\"]")
-			return true
-		@element = $(@options.template).appendTo(@options.attachNode || @mainContainer)
 
 	_parseNodes: ->
 		iterator = (node) ->
@@ -46,7 +34,7 @@ class _Templated
 					event = $.trim(_pair[0])
 					handler = $.trim(_pair[1])
 					$(node)[event] =>
-						@[handler]()
+						@[handler](node)
 		@_parse(@dataAttrs.event, iterator)
 
 	_parse: (attr, iterator) ->

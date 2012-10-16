@@ -1,42 +1,33 @@
-require 'json'
-
 class ProjectsController < ApplicationController
+  respond_to :html
+  
+
   def new
     @project = Project.new
-    respond_to do |format|
-      format.html {render :partial => 'form'}
-      format.json 
-    end
+	respond_with(@project, :layout => !request.xhr?)
   end
 
   def edit
     @project = Project.find(params[:id])
+	respond_with(@project, :layout => !request.xhr?)
   end
 
   def create
-    # @project = Project.new(params[:project].merge({:user => current_user}))
-    p params[:project]
-    @project = Project.find(2)
-    
-    #if @project.save
-      respond_to do |format|
-        format.html
-        format.json do
-        {:data => @project.to_json, :template => render_to_string('_item.html', :layout => false, :locals => {:item => @project})}.to_json
-        end
-      end
-    #else
-    #  render :action => 'new'
-    #end
+    @project = Project.new(params[:project].merge({:user => current_user}))    
+    if @project.save
+	  respond_with(@project, :partial => 'item', :object => @project)
+	else
+	  render :action => 'new'
+	end
   end
 
   def update
-    @project = Project.find(params[:id])
+	@project = Project.find(params[:id])
     if @project.update_attributes(params[:project])
-      redirect_to @project, :notice => 'Project was updated successfully'
-    else
-      render :action => 'edit'
-    end
+	  respond_with(@project, :partial => 'item', :object => @project)
+	else
+	  render :action => 'edit'
+	end
   end
 
   def destroy
