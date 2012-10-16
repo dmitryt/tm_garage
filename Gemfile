@@ -10,11 +10,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'therubyracer'
 gem 'uglifier'
-
-group :assets do
-  gem 'haml_coffee_assets'
-  gem 'execjs'
-end
+gem 'json'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

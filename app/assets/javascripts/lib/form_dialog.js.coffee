@@ -8,26 +8,23 @@ class FormDialog extends tm._Templated
 
 	constructor: (@options, @element) ->
 		@dialog = $('#dialog')
+		@saveBtn = 
 		super
 		@init()
 
 	init: ->
 		@dOptions.buttons = 
-			"save": => @onSave()
+			"save": => @_onSave()
 			"cancel": => @close()
 		@_apply @dOptions
 
 	setForm: (@form, data = {}) ->
 		@reset()
-		attr = @dataAttrs.name
-		@form.find("[#{attr}]").map (i, node) ->
-			v = data[$(node).attr(attr)]
-			$(node).val(v)
+		@form.submit -> false
 		@dialog.append(@form)
 	
-	open: (args, form, data = {}, @onSave = ->) ->
-		debugger
-		@setForm(form, data)
+	open: (args, form, @onSave = ->) ->
+		@setForm(form)
 		@_apply $.extend({}, @dOptions, args)
 		@_apply 'open'
 
@@ -36,6 +33,13 @@ class FormDialog extends tm._Templated
 
 	close: ->
 		@_apply 'close'
+
+	_onSave: ->
+		btns = $(@dialog.get(0).parentNode).find('button')
+		btns.attr('disabled', 'disabled')
+		df = @onSave(@form)
+		df.always -> btns.removeAttr('disabled')
+			
 
 	_apply: (something) ->
 		@dialog.dialog(something)

@@ -5,21 +5,16 @@
     = render :partial => 'projects/item', :object => new_project
   %script{:type => 'text/template', :id => 'task'}
     = render :partial => 'tasks/item', :object => new_task
-  %script{:type => 'text/template', :id => 'projectForm'}
-    = render :partial => 'projects/form', :locals => {:project => new_project}
-  %script{:type => 'text/template', :id => 'taskForm'}
-    = render :partial => 'tasks/form', :locals => {:project => new_project, :task => new_task}
   :javascript
     $(document).ready(function(){
       new tm.Manager(#{@projects.to_json(:include => :tasks)});
     });
 
 - content_for :footer do
-  %button.b-project-add-btn
+  %button.b-project-add-btn#addProjectBtn{'data-url' => new_project_path}
     %i
     Add TODO list
 
-= link_to 'Create project', new_project_path
 = render :partial => 'projects/item', :collection => @projects
 %br/ 
 %br/

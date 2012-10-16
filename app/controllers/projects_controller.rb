@@ -1,6 +1,12 @@
+require 'json'
+
 class ProjectsController < ApplicationController
   def new
     @project = Project.new
+    respond_to do |format|
+      format.html {render :partial => 'form'}
+      format.json 
+    end
   end
 
   def edit
@@ -8,12 +14,20 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(params[:project].merge({:user => current_user}))
-    if @project.save
-      redirect_to @project, :notice => 'Project was saved successfully'
-    else
-      render :action => 'new'
-    end
+    # @project = Project.new(params[:project].merge({:user => current_user}))
+    p params[:project]
+    @project = Project.find(2)
+    
+    #if @project.save
+      respond_to do |format|
+        format.html
+        format.json do
+        {:data => @project.to_json, :template => render_to_string('_item.html', :layout => false, :locals => {:item => @project})}.to_json
+        end
+      end
+    #else
+    #  render :action => 'new'
+    #end
   end
 
   def update

@@ -1,3 +1,3 @@
-= form_for project do |f|
+= form_for @project, :remote => true do |f|
   = f.label :title
-  = f.text_field :title, 'data-name' => 'title'
+  = f.text_field :title

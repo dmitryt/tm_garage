@@ -5,6 +5,8 @@ class Project extends tm._Templated
 		form: '#projectForm'
 		data: {}
 
+	@url: '/projects'
+
 	tasks: []
 
 	constructor: (options) ->
@@ -25,7 +27,6 @@ class Project extends tm._Templated
 			dialog: @options.dialog
 
 	onEdit: ->
-		debugger
 		@options.dialog.open
 			title: 'Edit project'
 			Project.form 
