@@ -4,8 +4,8 @@
   .b-edit
     .i-change-priority{:title => 'change priority', 'data-attach-event' => 'click: onChangePriority'}>
     .delimiter>
-    .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit'}>
+    .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit', 'data-url'=> edit_project_task_path(item.project, item)}>
     .delimiter>
-    .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete'}>
-  .b-title
+    .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete', 'data-method' => "delete", 'data-url'=> project_task_path(item.project, item)}>
+  .b-title{'data-attach-point' => 'title'}
     = item.title

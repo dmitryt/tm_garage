@@ -60,6 +60,7 @@ class FormDialog extends tm._Templated
 
 	reset: ->
 		@dialog.empty()
+		delete @type
 
 	close: ->
 		@_apply 'close'
@@ -75,12 +76,18 @@ class FormDialog extends tm._Templated
 			@close()
 		df.always -> btns.removeAttr('disabled')
 
-	_getAjaxArgs: ->
+	# external method, is used for generating args from form
+	getAjaxArgs: (form) ->
+		@reset()
+		@_getAjaxArgs form
+
+	_getAjaxArgs: (form) ->
+		f = form || @form
 		return @ajaxArgs if @type == 'confirm'
 		args = 
-			url: @form.attr('action')
-			type: @form.attr('method')
-			data: @form.serialize()	
+			url: f.attr('action')
+			type: f.attr('method')
+			data: f.serialize()	
 
 	_apply: (something) ->
 		@dialog.dialog(something)

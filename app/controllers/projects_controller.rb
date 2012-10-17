@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
   def update
 	@project = Project.find(params[:id])
     if @project.update_attributes(params[:project])
-	  render :json => @project
+	  render :json => @project, :root => false
 	else
 	  render :action => 'edit'
 	end

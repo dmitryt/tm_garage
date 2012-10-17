@@ -1,24 +1,13 @@
 class Task extends tm._Templated
-	options: 
-		template: 'task'
-		form: '#taskForm'
 
-	constructor: (options) ->
-		Task.form ?= $($(@options.form).html())
-		super(options)
+	onEdit: (target) ->
+		@options.dialog.open target, {title: 'Edit task'}, @onSave
 
-	onEdit: ->
-		@options.dialog.open
-			title: 'Edit task'
-			Task.form 
-			@options.data
-			@onSave
+	onSave: (data = {}) =>
+		@applyToDOM(data)
 
-	onSave: ->
-		console.log('onSave task')
-
-	onDelete: ->
-		console.log('onDelete')
+	onDelete: (target) ->
+		@options.dialog.confirm(target, null, => @destroy())
 
 	onChangePriority: ->
 		console.log('onChangePriority')

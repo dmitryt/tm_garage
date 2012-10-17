@@ -9,7 +9,13 @@
       .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete', 'data-method' => "delete", 'data-url'=> project_path(item)}
   .b-project-task-add
     .i-add
-    %input.b-input{:placeholder => 'Start typing here to create a task...'}
-    %button.b-add-btn Add task
+    = form_for Task.new, :url => project_tasks_path(item), :remote => true, :html => {:id => nil, :class => 'new_task'} do |f|
+      = f.text_field :title, :class => 'b-input', :placeholder => 'Start typing here to create a task...'
+      = f.submit :class => 'b-add-btn', :value => 'Add task'
   .b-project-task-list{'data-attach-point' => 'tasksContainer'}
-    = render :partial => 'tasks/item', :collection => item.tasks
+    - content = render(:partial => 'tasks/item', :collection => item.tasks)
+    - if content
+      = content
+    - else 
+      .h-empty-list
+        The task's list is empty
