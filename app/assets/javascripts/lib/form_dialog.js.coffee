@@ -1,37 +1,9 @@
-class FormDialog extends tm._Templated
-
-	dOptions:
-		modal: true
-		resizable: false
-		draggable: false
-		autoOpen: false
-
-	constructor: (@options, @element) ->
-		@dialog = $('#dialog')
-		super
-		@init()
-
-	getAuthData: ->
-		data = {}
-		csrf_token = $('meta[name=csrf-token]').attr('content')
-		csrf_param = $('meta[name=csrf-param]').attr('content')
-		data[csrf_param] = csrf_token
-		data
-
-	init: ->
-		@dOptions.buttons = 
-			"save": => @_onSave()
-			"cancel": => @close()
-		@_apply @dOptions
+class FormDialog extends tm.Dialog
 
 	setForm: (@form) ->
 		@reset()
 		@form.submit -> false
-		@dialog.append(@form)
-
-	setContent: (content) ->
-		@reset()
-		@dialog.append(content)
+		@setContent(@form)
 
 	confirm: (opener, content = 'Are you sure you want to delete item?', @onSave = ->) ->
 		args =
@@ -58,13 +30,6 @@ class FormDialog extends tm._Templated
 			@type = 'form'
 			@_apply 'open'
 
-	reset: ->
-		@dialog.empty()
-		delete @type
-
-	close: ->
-		@_apply 'close'
-
 	onSave: ->
 
 	_onSave: ->
@@ -88,9 +53,6 @@ class FormDialog extends tm._Templated
 			url: f.attr('action')
 			type: f.attr('method')
 			data: f.serialize()	
-
-	_apply: (something) ->
-		@dialog.dialog(something)
 
 namespace 'tm', (exports) ->
 	exports.FormDialog = FormDialog

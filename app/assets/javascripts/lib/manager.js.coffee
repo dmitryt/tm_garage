@@ -9,6 +9,10 @@ class Manager
 
 	_initDialog: ->
 		@dialog = new tm.FormDialog({})
+		debugger;
+		@dialog2 = new tm.Dialog({})
+		@dialog2.hello = 'world'
+		@dialog3 = new tm.Dialog({})
 
 	_initProjects: (projects = []) ->
 		wNodes = $('[data-attach-widget="tm.Project"]')

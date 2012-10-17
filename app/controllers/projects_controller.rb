@@ -12,21 +12,18 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(params[:project].merge({:user => current_user}))    
+    @project = Project.new(params[:project].merge({:user => current_user}))
     if @project.save
 	  respond_with(@project, :partial => 'item', :object => @project)
 	else
-	  render :action => 'new'
+	  render :json => gen_response, :root => false
 	end
   end
 
   def update
 	@project = Project.find(params[:id])
-    if @project.update_attributes(params[:project])
-	  render :json => @project, :root => false
-	else
-	  render :action => 'edit'
-	end
+    @project.update_attributes(params[:project])
+	render :json => gen_response, :root => false
   end
 
   def destroy
@@ -44,6 +41,12 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects
+  end
+
+  private
+  
+  def gen_response
+	{:data => @project, :errors => @project.errors.full_messages}
   end
 
 end

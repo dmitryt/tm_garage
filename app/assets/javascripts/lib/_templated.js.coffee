@@ -12,6 +12,7 @@ class _Templated
 
 	constructor: (options = {}, @element) ->
 		@options = $.extend {attachPoints: {}}, options
+		@dialog = new tm.FormDialog()
 		@initSubwidgets()
 		@_parseEvents()
 		@_parseNodes()
@@ -43,6 +44,29 @@ class _Templated
 	applyToDOM: (data) ->
 		for k,v of @options.attachPoints
 			$(v).text(data[k]) if data[k]
+
+	getAuthData: ->
+		data = {}
+		csrf_token = $('meta[name=csrf-token]').attr('content')
+		csrf_param = $('meta[name=csrf-param]').attr('content')
+		data[csrf_param] = csrf_token
+		data
+
+	onDelete: (opener) ->
+		return if !opener
+		content = 'Are you sure you want to delete item?'
+		args = 
+			url: $(opener).attr('data-url')
+			method: 'post'
+			data: @getAuthData()
+		buttons = 
+			ok:
+				title: 'ok',
+				callback => 
+					df = $.ajax args
+					df.done (response) =>
+						@destroy()
+		@dialog.open({content: content, title: "Delete item", buttons: buttons})
 
 	destroy: ->
 		$(@element).remove()
