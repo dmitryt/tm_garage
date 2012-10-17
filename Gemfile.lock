@@ -128,7 +128,6 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   jquery-ui-rails
-  json
   rails
   sass-rails
   sqlite3

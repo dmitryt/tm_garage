@@ -1,10 +1,6 @@
 class _Templated
 	mainContainer: '#page'
 
-	_options: 
-		template: null
-		data: {}
-
 	dataAttrs:
 		widget: 'data-attach-widget'
 		point: 'data-attach-point'
@@ -15,14 +11,15 @@ class _Templated
 		# could be redefined in children classes
 
 	constructor: (options = {}, @element) ->
-		@options = $.extend {}, @_options, @options, options
+		@options = $.extend {attachPoints: {}}, options
 		@initSubwidgets()
 		@_parseEvents()
 		@_parseNodes()
 
 	_parseNodes: ->
 		iterator = (node) ->
-			@[$.attr(node, @dataAttrs.point)] = node
+			attr = $.attr(node, @dataAttrs.point)
+			@options.attachPoints[attr] = node
 		@_parse(@dataAttrs.point, iterator)
 
 	_parseEvents: ->
@@ -43,8 +40,12 @@ class _Templated
 				iterator.call(@, node)
 				$.removeAttr(node, attr)
 
+	applyToDOM: (data) ->
+		for k,v of @options.attachPoints
+			$(v).text(data[k]) if data[k]
+
 	destroy: ->
-		$(@element).remove
+		$(@element).remove()
 
 namespace 'tm', (exports) ->
 	exports._Templated = _Templated

@@ -16,11 +16,11 @@ class Project extends tm._Templated
 	onEdit: (target) ->
 		@options.dialog.open target, {title: 'Edit project'}, @onSave
 
-	onSave: ->
-		console.log('onSave')
+	onSave: (data = {}) =>
+		@applyToDOM(data)
 
-	onDelete: ->
-		console.log('onDelete')
+	onDelete: (target) ->
+		@options.dialog.confirm(target, null, => @destroy())
 
 	destroy: ->
 		task.destroy() for task in @tasks

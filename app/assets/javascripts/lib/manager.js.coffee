@@ -24,7 +24,7 @@ class Manager
 	openPopup: (opener = null, args) ->
 		@dialog.open opener, args, @onAddProject
 
-	onAddProject: (r) ->
+	onAddProject: (r) =>
 		node = $(r).appendTo(@mainContainer)
 		@createProject node
 			

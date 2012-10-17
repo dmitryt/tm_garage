@@ -1,7 +1,6 @@
 class ProjectsController < ApplicationController
-  respond_to :html
+  respond_to :html, :json
   
-
   def new
     @project = Project.new
 	respond_with(@project, :layout => !request.xhr?)
@@ -24,7 +23,7 @@ class ProjectsController < ApplicationController
   def update
 	@project = Project.find(params[:id])
     if @project.update_attributes(params[:project])
-	  respond_with(@project, :partial => 'item', :object => @project)
+	  render :json => @project
 	else
 	  render :action => 'edit'
 	end
@@ -32,7 +31,9 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = Project.find(params[:id])
-    @project.destroy
+    if @project.destroy
+      render :json => @project and return
+    end
     redirect_to projects_path
   end
 
