@@ -18,11 +18,11 @@ class Project extends tm._Templated
 		@createTask(node) for node in wNodes
 
 	createTask: (dom) ->
-		new tm.Task {dialog: @options.dialog}, dom
+		new tm.Task dom
 
 	onAddTask: ->
 		ap = @options.attachPoints
-		args = @options.dialog.getAjaxArgs(ap.addTaskForm)
+		args = @dialog.getAjaxArgs(ap.addTaskForm)
 		df = $.ajax args
 		df.done (r) =>
 			node = $(r).appendTo(ap.tasksContainer)
@@ -30,13 +30,13 @@ class Project extends tm._Templated
 			ap.addTaskForm.get(0).reset()
 
 	onEdit: (target) ->
-		@options.dialog.open target, {title: 'Edit project'}, @onSave
+		args = 
+			title: 'Edit project'
+			callback: (data = {}) => @onSave(data)
+		@dialog.openForm target, args 
 
-	onSave: (data = {}) =>
+	onSave: (data) =>
 		@applyToDOM(data)
-
-	onDelete: (target) ->
-		@options.dialog.confirm(target, null, => @destroy())
 
 namespace 'tm', (exports) ->
 	exports.Project = Project

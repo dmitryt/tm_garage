@@ -1,6 +1,4 @@
 class Dialog
-	
-	@_instance: undefined
 
 	dOptions:
 		modal: true
@@ -9,17 +7,11 @@ class Dialog
 		autoOpen: false
 
 	buttons:
-		ok:
-			title: "ok"
-			callback: => onOk
-		cancel:
-			title: "cancel"
-			callback: => onCancel
+		ok: 'ok'
+		cancel: 'cancel'
 
 	constructor: (args) ->
-		return Dialog._instance if Dialog._instance
-		@dom = $('#dialog')
-		Dialog._instance = @
+		@dom = $('#dialog').dialog(@dOptions)
 
 	setContent: (content) ->
 		@reset()
@@ -28,8 +20,7 @@ class Dialog
 	reset: ->
 		@dom.empty()
 
-	open: (options = {}, content = '') ->
-		@setContent(content)
+	_open: (options = {}) ->
 		@setOptions(options)
 		@_apply 'open'
 
@@ -38,18 +29,23 @@ class Dialog
 
 	setOptions: (options = {}) ->
 		buttons = {}
-		for k,v of $.extend({}, @buttons, options.buttons)
-			buttons[v.title] -> v.callback
+		_buttons = $.extend({}, @buttons, options.buttons)
+		callback = options.callback
+		buttons[_buttons.ok] = => @onAccept(callback)
+		buttons[_buttons.cancel] = => @onCancel()
+		delete options.callback
 		delete options.buttons
-		@_apply 'option', $.extend({}, @dOptions, buttons, options)
+		@_apply $.extend({}, @dOptions, {buttons: buttons}, options)
 
-	_apply: (command, args = {}) ->
-		@dom.dialog command, args
+	_apply: (something) ->
+		@dom.dialog(something)
 
-	#Handlers
-		onOk: ->
-		onCancel: ->
-			@close()
+	onAccept: (callback = ->) ->
+		callback()
+
+	onCancel: ->
+		@close()
+		
 
 namespace 'tm', (exports) ->
 	exports.Dialog = Dialog

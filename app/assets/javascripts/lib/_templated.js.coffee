@@ -7,11 +7,13 @@ class _Templated
 		event: 'data-attach-event'
 		name: 'data-name'
 
+	options:
+		attachPoints: {}
+
 	initSubwidgets: ->
 		# could be redefined in children classes
 
-	constructor: (options = {}, @element) ->
-		@options = $.extend {attachPoints: {}}, options
+	constructor: (@element) ->
 		@dialog = new tm.FormDialog()
 		@initSubwidgets()
 		@_parseEvents()
@@ -57,16 +59,10 @@ class _Templated
 		content = 'Are you sure you want to delete item?'
 		args = 
 			url: $(opener).attr('data-url')
-			method: 'post'
+			method: 'delete'
 			data: @getAuthData()
-		buttons = 
-			ok:
-				title: 'ok',
-				callback => 
-					df = $.ajax args
-					df.done (response) =>
-						@destroy()
-		@dialog.open({content: content, title: "Delete item", buttons: buttons})
+		callback = => $.ajax(args).done (response) => @destroy()
+		@dialog.openConfirm({title: "Delete item", callback: callback}, content)
 
 	destroy: ->
 		$(@element).remove()

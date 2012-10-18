@@ -3,16 +3,9 @@ class Manager
 	mainContainer: '#page'
 
 	constructor: () ->
-		@_initDialog()
 		@_initProjects()
+		@dialog = new tm.FormDialog()
 		@_setEventListeners()
-
-	_initDialog: ->
-		@dialog = new tm.FormDialog({})
-		debugger;
-		@dialog2 = new tm.Dialog({})
-		@dialog2.hello = 'world'
-		@dialog3 = new tm.Dialog({})
 
 	_initProjects: (projects = []) ->
 		wNodes = $('[data-attach-widget="tm.Project"]')
@@ -20,15 +13,18 @@ class Manager
 
 	_setEventListeners: ->
 		btn = $('#addProjectBtn')
-		btn.click => @openPopup(btn, {title: 'Add project'})
+		btn.click => @onAddProject(btn)
 	
 	createProject: (dom) ->
-		new tm.Project {dialog: @dialog}, dom
+		new tm.Project dom
 
-	openPopup: (opener = null, args) ->
-		@dialog.open opener, args, @onAddProject
+	onAddProject: (opener) ->
+		args = 
+			title: 'Add project'
+			callback: => @_onAddProject()
+		@dialog.openForm opener, args
 
-	onAddProject: (r) =>
+	_onAddProject: (r) =>
 		node = $(r).appendTo(@mainContainer)
 		@createProject node
 			

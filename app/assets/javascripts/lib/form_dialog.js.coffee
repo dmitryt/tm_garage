@@ -1,15 +1,25 @@
 class FormDialog extends tm.Dialog
 
+	@_instance: undefined
+
+	buttons:
+		ok: 'save'
+		cancel: 'cancel'
+
+	constructor: (args) ->
+		return FormDialog._instance if FormDialog._instance
+		super
+		FormDialog._instance = @
+
 	setForm: (@form) ->
-		@reset()
 		@form.submit -> false
 		@setContent(@form)
 
 	confirm: (opener, content = 'Are you sure you want to delete item?', @onSave = ->) ->
 		args =
 			buttons:
-				"ok": => @_onSave()
-				"cancel": => @close()
+				"ok": "save"
+				"cancel": "cancel"
 			title: 'Delete item'
 		@_apply $.extend({}, @dOptions, args)
 		@setContent content
@@ -19,40 +29,50 @@ class FormDialog extends tm.Dialog
 			data: @getAuthData()
 		@type = 'confirm'
 		@_apply 'open'
-	
-	open: (opener, options = {}, @onSave = ->) ->
+
+	openForm: (opener, options = {}) ->
 		return if !opener
 		df = $.ajax
 			url: $(opener).attr('data-url')
 		df.done (form) =>
-			@_apply $.extend({}, @dOptions, options)
 			@setForm $(form)
-			@type = 'form'
-			@_apply 'open'
+			@_open(options)
 
-	onSave: ->
+	openConfirm: (options, content) ->
+		options.buttons ?= {ok: 'ok'}
+		@setContent content
+		@_open(options)
 
-	_onSave: ->
-		btns = $(@dialog.get(0).parentNode).find('button')
-		btns.attr('disabled', 'disabled')
-		df = $.ajax(@_getAjaxArgs())
+	onAccept: (callback = -> )->
+		@disable true
+		df = $.ajax
+			
 		df.done (response) =>
-			@onSave(response)
+			err = response.errors
+			if (err.length != 0) 
+				return @showErrors(err)
+			callback response.data
 			@close()
-		df.always -> btns.removeAttr('disabled')
+		df.always => @disable(false)
 
-	# external method, is used for generating args from form
-	getAjaxArgs: (form) ->
-		@reset()
-		@_getAjaxArgs form
+	getAjaxArgs: ->
+		
+		url: @form.attr('action')
+		type: @form.attr('method')
+		data: @form.serialize()
 
-	_getAjaxArgs: (form) ->
-		f = form || @form
-		return @ajaxArgs if @type == 'confirm'
-		args = 
-			url: f.attr('action')
-			type: f.attr('method')
-			data: f.serialize()	
+	disable: (flag) ->
+		debugger
+		return if !@form
+		btns = $(@dom.get(0).parentNode).find('button')
+		if flag
+			btns.attr('disabled', 'disabled')
+		else
+			btns.removeAttr('disabled')
+
+	showErrors: (errors = []) ->
+		v = errors.join('<br/>')
+		@form.find('.errors').html v
 
 namespace 'tm', (exports) ->
 	exports.FormDialog = FormDialog
