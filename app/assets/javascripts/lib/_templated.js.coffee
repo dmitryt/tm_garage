@@ -47,22 +47,11 @@ class _Templated
 		for k,v of @options.attachPoints
 			$(v).text(data[k]) if data[k]
 
-	getAuthData: ->
-		data = {}
-		csrf_token = $('meta[name=csrf-token]').attr('content')
-		csrf_param = $('meta[name=csrf-param]').attr('content')
-		data[csrf_param] = csrf_token
-		data
-
 	onDelete: (opener) ->
 		return if !opener
 		content = 'Are you sure you want to delete item?'
-		args = 
-			url: $(opener).attr('data-url')
-			method: 'delete'
-			data: @getAuthData()
-		callback = => $.ajax(args).done (response) => @destroy()
-		@dialog.openConfirm({title: "Delete item", callback: callback}, content)
+		callback = (response) => @destroy()
+		@dialog.openConfirm(opener, {title: "Delete item"}, content, callback)
 
 	destroy: ->
 		$(@element).remove()

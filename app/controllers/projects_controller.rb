@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project = Project.find(params[:id])
     if @project.destroy
-      render :json => @project and return
+      render :json => gen_response, :root => false and return
     end
     redirect_to projects_path
   end

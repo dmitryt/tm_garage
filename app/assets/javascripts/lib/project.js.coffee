@@ -32,8 +32,7 @@ class Project extends tm._Templated
 	onEdit: (target) ->
 		args = 
 			title: 'Edit project'
-			callback: (data = {}) => @onSave(data)
-		@dialog.openForm target, args 
+		@dialog.openForm(target, args, @onSave)
 
 	onSave: (data) =>
 		@applyToDOM(data)

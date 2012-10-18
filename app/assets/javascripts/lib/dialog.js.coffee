@@ -21,30 +21,25 @@ class Dialog
 		@dom.empty()
 
 	_open: (options = {}) ->
-		@setOptions(options)
+		df = @setOptions(options)
 		@_apply 'open'
+		df
 
 	close: ->
 		@_apply 'close'
 
 	setOptions: (options = {}) ->
 		buttons = {}
+		callback = ->
 		_buttons = $.extend({}, @buttons, options.buttons)
-		callback = options.callback
-		buttons[_buttons.ok] = => @onAccept(callback)
-		buttons[_buttons.cancel] = => @onCancel()
-		delete options.callback
+		buttons[_buttons.ok] = => callback()
+		buttons[_buttons.cancel] = => @close()
 		delete options.buttons
 		@_apply $.extend({}, @dOptions, {buttons: buttons}, options)
+		=> callback()
 
 	_apply: (something) ->
 		@dom.dialog(something)
-
-	onAccept: (callback = ->) ->
-		callback()
-
-	onCancel: ->
-		@close()
 		
 
 namespace 'tm', (exports) ->

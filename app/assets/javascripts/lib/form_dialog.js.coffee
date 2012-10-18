@@ -11,58 +11,64 @@ class FormDialog extends tm.Dialog
 		super
 		FormDialog._instance = @
 
+	getAuthData: ->
+		data = {}
+		csrf_token = $('meta[name=csrf-token]').attr('content')
+		csrf_param = $('meta[name=csrf-param]').attr('content')
+		data[csrf_param] = csrf_token
+		data
+
 	setForm: (@form) ->
 		@form.submit -> false
 		@setContent(@form)
 
-	confirm: (opener, content = 'Are you sure you want to delete item?', @onSave = ->) ->
-		args =
-			buttons:
-				"ok": "save"
-				"cancel": "cancel"
-			title: 'Delete item'
-		@_apply $.extend({}, @dOptions, args)
-		@setContent content
-		@ajaxArgs = 
-			url: $(opener).attr('data-url')
-			type: $(opener).attr('data-method') || 'post'
-			data: @getAuthData()
-		@type = 'confirm'
-		@_apply 'open'
-
-	openForm: (opener, options = {}) ->
+	openForm: (opener, options = {}, callback = ->) ->
 		return if !opener
 		df = $.ajax
 			url: $(opener).attr('data-url')
 		df.done (form) =>
 			@setForm $(form)
-			@_open(options)
+			@_open(options).done =>
+				@_sendForm().done (response) => 
+					@onResponse(response, callback)
 
-	openConfirm: (options, content) ->
+	openConfirm: (opener, options = {}, content = '', callback = ->) ->
 		options.buttons ?= {ok: 'ok'}
 		@setContent content
-		@_open(options)
+		@_open(options).done =>
+			@close()
+			@_sendRequest(opener).done (response) => 	
+				@onResponse(response, callback)
 
-	onAccept: (callback = -> )->
+	_sendForm: ->
 		@disable true
 		df = $.ajax
-			
-		df.done (response) =>
-			err = response.errors
-			if (err.length != 0) 
-				return @showErrors(err)
-			callback response.data
-			@close()
+			url: @form.attr('action')
+			type: @form.attr('method')
+			data: @form.serialize()
+		df.fail => @onFailure()
 		df.always => @disable(false)
+		df
 
-	getAjaxArgs: ->
-		
-		url: @form.attr('action')
-		type: @form.attr('method')
-		data: @form.serialize()
+	_sendRequest: (opener) ->
+		df = $.ajax
+			url: $(opener).attr('data-url')
+			type: $(opener).attr('data-method') || 'post'
+			data: @getAuthData()
+		df.fail => @onFailure()
+
+	onResponse: (response, callback = ->) ->
+		# Is used only for showing errors, if it's needed
+		err = response.errors
+		if (err && err.length != 0) 
+			return @showErrors(err)
+		callback(response.data || response)
+		@close()
+
+	onFailure: ->
+		alert('Something went wrong')
 
 	disable: (flag) ->
-		debugger
 		return if !@form
 		btns = $(@dom.get(0).parentNode).find('button')
 		if flag
@@ -71,7 +77,9 @@ class FormDialog extends tm.Dialog
 			btns.removeAttr('disabled')
 
 	showErrors: (errors = []) ->
-		v = errors.join('<br/>')
+		delimiter = @form ? '<br/>' : '\n'
+		v = errors.join(delimiter)
+		return alert(v) if !@form
 		@form.find('.errors').html v
 
 namespace 'tm', (exports) ->
