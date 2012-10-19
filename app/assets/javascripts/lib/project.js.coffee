@@ -22,17 +22,17 @@ class Project extends tm._Templated
 
 	onAddTask: ->
 		ap = @options.attachPoints
-		args = @dialog.getAjaxArgs(ap.addTaskForm)
-		df = $.ajax args
-		df.done (r) =>
-			node = $(r).appendTo(ap.tasksContainer)
-			@createTask node
-			ap.addTaskForm.get(0).reset()
+		form = ap.addTaskForm
+		@ajax.sendForm(form).done (r) =>
+			@ajax.onResponse {response: r, form: form}, =>
+				node = $(r).appendTo(ap.tasksContainer)
+				@createTask node
+				form.get(0).reset()
 
 	onEdit: (target) ->
 		args = 
 			title: 'Edit project'
-		@dialog.openForm(target, args, @onSave)
+		@dialog.openForm target, args, (r) => @onSave(r)
 
 	onSave: (data) =>
 		@applyToDOM(data)

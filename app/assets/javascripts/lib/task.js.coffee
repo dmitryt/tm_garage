@@ -1,13 +1,12 @@
 class Task extends tm._Templated
 
 	onEdit: (target) ->
-		@dialog.open target, {title: 'Edit task'}, @onSave
+		args = 
+			title: 'Edit task'
+		@dialog.openForm target, args, (r) => @onSave(r)
 
 	onSave: (data = {}) =>
 		@applyToDOM(data)
-
-	onDelete: (target) ->
-		@dialog.confirm(target, null, => @destroy())
 
 	onChangePriority: ->
 		console.log('onChangePriority')

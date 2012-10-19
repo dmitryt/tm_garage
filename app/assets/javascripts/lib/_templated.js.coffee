@@ -7,19 +7,18 @@ class _Templated
 		event: 'data-attach-event'
 		name: 'data-name'
 
-	options:
-		attachPoints: {}
-
 	initSubwidgets: ->
 		# could be redefined in children classes
 
 	constructor: (@element) ->
 		@dialog = new tm.FormDialog()
+		@ajax = tm.Ajax
 		@initSubwidgets()
 		@_parseEvents()
 		@_parseNodes()
 
 	_parseNodes: ->
+		@options = {attachPoints: {}}
 		iterator = (node) ->
 			attr = $.attr(node, @dataAttrs.point)
 			@options.attachPoints[attr] = node

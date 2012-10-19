@@ -20,23 +20,20 @@ class Dialog
 	reset: ->
 		@dom.empty()
 
-	_open: (options = {}) ->
-		df = @setOptions(options)
+	_open: (options = {}, callback = ->) ->
+		@setOptions(options, callback)
 		@_apply 'open'
-		df
 
 	close: ->
 		@_apply 'close'
 
-	setOptions: (options = {}) ->
+	setOptions: (options = {}, callback = ->) ->
 		buttons = {}
-		callback = ->
 		_buttons = $.extend({}, @buttons, options.buttons)
 		buttons[_buttons.ok] = => callback()
 		buttons[_buttons.cancel] = => @close()
 		delete options.buttons
 		@_apply $.extend({}, @dOptions, {buttons: buttons}, options)
-		=> callback()
 
 	_apply: (something) ->
 		@dom.dialog(something)

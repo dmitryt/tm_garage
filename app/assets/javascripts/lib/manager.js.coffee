@@ -21,13 +21,10 @@ class Manager
 	onAddProject: (opener) ->
 		args = 
 			title: 'Add project'
-			callback: => @_onAddProject()
-		@dialog.openForm opener, args
-
-	_onAddProject: (r) =>
-		node = $(r).appendTo(@mainContainer)
-		@createProject node
-			
+		cb = (r) =>
+			node = $(r).appendTo(@mainContainer)
+			@createProject node	
+		@dialog.openForm opener, args, (r) => cb(r)
 
 namespace 'tm', (exports) ->
 	exports.Manager = Manager

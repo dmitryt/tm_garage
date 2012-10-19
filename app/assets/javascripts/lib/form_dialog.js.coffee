@@ -10,13 +10,7 @@ class FormDialog extends tm.Dialog
 		return FormDialog._instance if FormDialog._instance
 		super
 		FormDialog._instance = @
-
-	getAuthData: ->
-		data = {}
-		csrf_token = $('meta[name=csrf-token]').attr('content')
-		csrf_param = $('meta[name=csrf-param]').attr('content')
-		data[csrf_param] = csrf_token
-		data
+		@ajax = tm.Ajax
 
 	setForm: (@form) ->
 		@form.submit -> false
@@ -24,49 +18,27 @@ class FormDialog extends tm.Dialog
 
 	openForm: (opener, options = {}, callback = ->) ->
 		return if !opener
-		df = $.ajax
-			url: $(opener).attr('data-url')
+		df = @ajax.fetchForm(opener)
 		df.done (form) =>
 			@setForm $(form)
-			@_open(options).done =>
-				@_sendForm().done (response) => 
-					@onResponse(response, callback)
+			@_open options, onclickCb
+		onclickCb = =>
+			@ajax.sendForm(@form).done (response) => 
+				@onResponse response, callback
 
 	openConfirm: (opener, options = {}, content = '', callback = ->) ->
+		@form = null
 		options.buttons ?= {ok: 'ok'}
 		@setContent content
-		@_open(options).done =>
+		onclickCb = =>
 			@close()
-			@_sendRequest(opener).done (response) => 	
-				@onResponse(response, callback)
-
-	_sendForm: ->
-		@disable true
-		df = $.ajax
-			url: @form.attr('action')
-			type: @form.attr('method')
-			data: @form.serialize()
-		df.fail => @onFailure()
-		df.always => @disable(false)
-		df
-
-	_sendRequest: (opener) ->
-		df = $.ajax
-			url: $(opener).attr('data-url')
-			type: $(opener).attr('data-method') || 'post'
-			data: @getAuthData()
-		df.fail => @onFailure()
+			@ajax.sendRequest(opener).done (response) => 	
+				@onResponse response, callback
+		@_open options, onclickCb
 
 	onResponse: (response, callback = ->) ->
-		# Is used only for showing errors, if it's needed
-		err = response.errors
-		if (err && err.length != 0) 
-			return @showErrors(err)
-		callback(response.data || response)
-		@close()
-
-	onFailure: ->
-		alert('Something went wrong')
+		if (@ajax.onResponse({response: response, form: @form}, callback)) 
+			@close()
 
 	disable: (flag) ->
 		return if !@form
@@ -75,12 +47,6 @@ class FormDialog extends tm.Dialog
 			btns.attr('disabled', 'disabled')
 		else
 			btns.removeAttr('disabled')
-
-	showErrors: (errors = []) ->
-		delimiter = @form ? '<br/>' : '\n'
-		v = errors.join(delimiter)
-		return alert(v) if !@form
-		@form.find('.errors').html v
 
 namespace 'tm', (exports) ->
 	exports.FormDialog = FormDialog
