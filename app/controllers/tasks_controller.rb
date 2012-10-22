@@ -17,23 +17,20 @@ class TasksController < ApplicationController
 	if @task.save
 	  respond_with(@task, :partial => 'item', :object => @task)
     else
-      render :action => 'new'
+      render  :json => gen_response, :root => false
     end
   end
 
   def update
 	@task = Task.find(params[:id])
-    if @task.update_attributes(params[:task])
-	  render :json => @task, :root => false
-    else
-      render :action => 'edit'
-    end
+    @task.update_attributes(params[:task])
+    render :json => gen_response, :root => false
   end
 
   def destroy
     @task = Task.find(params[:id])
     if @task.destroy
-      render :json => @task and return
+      render :json => gen_response and return
     end
     redirect_to project_path(@project)
   end
@@ -42,6 +39,10 @@ class TasksController < ApplicationController
 
   def set_project
 	@project = Project.find(params[:project_id])
+  end
+
+  def gen_response
+	{:data => @task, :errors => @task.errors.full_messages}
   end
 
 end

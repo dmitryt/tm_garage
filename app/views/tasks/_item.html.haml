@@ -1,11 +1,19 @@
-.b-row{'data-attach-widget'=> "tm.Task"}
-  .b-checkbox
-    %input{:type => 'checkbox'}
-  .b-edit
-    .i-change-priority{:title => 'change priority', 'data-attach-event' => 'click: onChangePriority'}>
-    .delimiter>
-    .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit', 'data-url'=> edit_project_task_path(item.project, item)}>
-    .delimiter>
-    .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete', 'data-method' => "delete", 'data-url'=> project_task_path(item.project, item)}>
-  .b-title{'data-attach-point' => 'title'}
-    = item.title
+%div{'data-attach-widget'=> "tm.Task", :class => item.finished ? 'h-finished' : ''}
+  = form_for item, :url => project_task_path(item.project, item) do |f|
+    .b-row
+      .b-checkbox
+        = f.check_box :finished, :'data-attach-event' => 'change: onFinish'
+      .b-edit
+        .i-change-priority{:title => 'change priority', 'data-attach-event' => 'click: onChangePriority'}>
+        .delimiter>
+        .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit', 'data-url'=> edit_project_task_path(item.project, item)}>
+        .delimiter>
+        .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete', 'data-method' => "delete", 'data-url'=> project_task_path(item.project, item)}>
+      .b-title{'data-attach-point' => 'title'}
+        = item.title
+      .tooltip
+        %ul
+          - Priority.all.each do |pr|
+            %li
+              = radio_button_tag 'task_priority', pr.id, item.priority == pr
+              = label_tag "task_priority_#{pr.id}", pr.title

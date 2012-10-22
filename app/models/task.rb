@@ -1,4 +1,4 @@
 class Task < ActiveRecord::Base
   belongs_to :project
-  has_one :priority
+  belongs_to :priority
 end

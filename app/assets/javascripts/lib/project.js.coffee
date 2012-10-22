@@ -1,5 +1,7 @@
 class Project extends tm._Templated
 
+	tasks: [],
+
 	constructor: ->
 		super
 		@_initAddTaskForm()
@@ -15,7 +17,7 @@ class Project extends tm._Templated
 
 	_initTasks: ->
 		wNodes = $(@element).find('[data-attach-widget="tm.Task"]')
-		@createTask(node) for node in wNodes
+		tasks = (@createTask(node) for node in wNodes)
 
 	createTask: (dom) ->
 		new tm.Task dom
@@ -36,6 +38,12 @@ class Project extends tm._Templated
 
 	onSave: (data) =>
 		@applyToDOM(data)
+
+	finishTask: (task, data) ->
+		if data.finished
+			@finishedContainer.append(task.dom)
+		else
+			@moveTaskToGroup(task, data)
 
 namespace 'tm', (exports) ->
 	exports.Project = Project

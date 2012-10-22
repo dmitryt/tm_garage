@@ -145,6 +145,7 @@
 	color: #acacac;
 	border-bottom: 1px solid #e7ebea;
 	cursor: pointer;
+	position: relative;
 }
 
 .b-project-task-list .b-checkbox {
@@ -176,6 +177,27 @@
 .b-project-task-list .b-row:hover .b-edit {
 	visibility: visible;
 }
+
+.b-project-task-list .h-finished .b-row {
+	background-color: #eee;
+	cursor: default;
+}
+
+.b-project-task-list .h-finished .b-row .b-edit {
+	visibility: hidden;
+}
+
+.b-project-task-list .h-finished .b-row .b-title {
+	text-decoration: line-through;
+	font-style: italic;
+}
+
+.b-project-task-list .b-row .tooltip {
+	position: absolute;
+	top: -999px;
+	left: -999px;
+}
+
 
 /* Add btn */
 .b-project-add-btn {
