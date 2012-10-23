@@ -11,7 +11,7 @@ class Tooltip
 		@element = $('#tooltip')
 		@element.click (e) => e.stopPropagation()
 		$(document.body).click => @close()
-		$(@element).find('radio').click => @onChange()
+		$(@element).find('input[type="radio"]').click => @onChange()
 		tm.Tooltip._instance = @
 	
 	open: (opener, @context) ->
@@ -20,14 +20,18 @@ class Tooltip
 		cb = => @opened = true
 		setTimeout cb, 0
 
+	onChange: ->
+		v = $(@element).find('input[type="radio"]:checked').val()
+		@context.onChanged v
+		@close()
+
 	close:  ->
 		return if !@opened
 		$(@element).css
 			top: -999
 			left: -999
 		@opened = false
-		v = $(@element).find('[name=task_priority]:checked').val
-		@context.onChanged v
+		
 
 namespace 'tm', (exports) ->
 	exports.Tooltip = Tooltip

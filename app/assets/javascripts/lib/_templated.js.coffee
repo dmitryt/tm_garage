@@ -10,12 +10,13 @@ class _Templated
 	initSubwidgets: ->
 		# could be redefined in children classes
 
-	constructor: (@element) ->
+	constructor: (@element, args = {}) ->
 		@dialog = new tm.FormDialog()
 		@ajax = tm.Ajax
 		@initSubwidgets()
 		@_parseEvents()
 		@_parseNodes()
+		$.extend(@, args)
 
 	_parseNodes: ->
 		@options = {attachPoints: {}}

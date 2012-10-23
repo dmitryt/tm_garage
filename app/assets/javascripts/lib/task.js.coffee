@@ -16,11 +16,11 @@ class Task extends tm._Templated
 		@tooltip.open opener, @
 
 	onChanged: (pValue) ->
-		form = @getForm
-		$(form.priority_id).val pValue
+		form = @getForm()
+		$(form.get(0)['task[priority_id]']).val pValue
 		@ajax.sendForm(form).done (r) =>
-			@ajax.onResponse {response: r, form: form}, =>
-
+			@ajax.onResponse {response: r, form: form}, (data) =>
+				$(@element).find('.b-row').css('background-color', data.priority.color);
 
 	getForm: ->
 		$(@element).find('form')	

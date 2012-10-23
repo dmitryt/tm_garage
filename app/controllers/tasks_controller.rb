@@ -17,14 +17,14 @@ class TasksController < ApplicationController
 	if @task.save
 	  respond_with(@task, :partial => 'item', :object => @task)
     else
-      render  :json => gen_response, :root => false
+      render  :json => gen_response, :root => false, :include => :priority
     end
   end
 
   def update
 	@task = Task.find(params[:id])
     @task.update_attributes(params[:task])
-    render :json => gen_response, :root => false
+    render :json => gen_response, :root => false, :include => :priority
   end
 
   def destroy

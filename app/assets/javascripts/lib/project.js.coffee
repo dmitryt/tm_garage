@@ -17,10 +17,10 @@ class Project extends tm._Templated
 
 	_initTasks: ->
 		wNodes = $(@element).find('[data-attach-widget="tm.Task"]')
-		tasks = (@createTask(node) for node in wNodes)
+		@tasks = (@createTask(node) for node in wNodes)
 
 	createTask: (dom) ->
-		new tm.Task dom
+		@tasks.push(new tm.Task dom, {project: @})
 
 	onAddTask: ->
 		ap = @options.attachPoints
@@ -29,7 +29,8 @@ class Project extends tm._Templated
 			@ajax.onResponse {response: r, form: form}, =>
 				node = $(r).appendTo(ap.tasksContainer)
 				@createTask node
-				form.get(0).reset()
+				form.get(0).reset
+				@checkEmptyMessage
 
 	onEdit: (target) ->
 		args = 
@@ -44,6 +45,10 @@ class Project extends tm._Templated
 			@finishedContainer.append(task.dom)
 		else
 			@moveTaskToGroup(task, data)
+
+	checkEmptyMessage: ->
+		m = @tasks.length ? 'hide' : 'show';
+		$(@options.attachPoints.emptyContainer)[m];
 
 namespace 'tm', (exports) ->
 	exports.Project = Project
