@@ -2,7 +2,7 @@ class Task extends tm._Templated
 
 	constructor: ->
 		super
-		@tooltip = tm.Tooltip
+		@tooltip = new tm.Tooltip()
 
 	onEdit: (target) ->
 		args = 
@@ -13,10 +13,22 @@ class Task extends tm._Templated
 		@applyToDOM(data)
 
 	onChangePriority: (opener) ->
-		@tooltip.open opener, @element
+		@tooltip.open opener, @
 
+	onChanged: (pValue) ->
+		form = @getForm
+		$(form.priority_id).val pValue
+		@ajax.sendForm(form).done (r) =>
+			@ajax.onResponse {response: r, form: form}, =>
+
+
+	getForm: ->
+		$(@element).find('form')	
+
+	_send: ->
+		
 	onFinish: ->
-		form = $(@element).find('form')
+		form = @getForm
 		@ajax.sendForm(form).done (r) =>
 			@ajax.onResponse {response: r, form: form}, =>
 				m = if r.data.finished then 'addClass' else 'removeClass'

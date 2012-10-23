@@ -25,3 +25,9 @@
       .copy
         &copy;&nbsp;Ruby Garage
     #dialog
+    #tooltip.tooltip
+      %ul
+        - Priority.all.each do |pr|
+          %li
+            = radio_button_tag 'task_priority', pr.id, false
+            = label_tag "task_priority_#{pr.id}", pr.title

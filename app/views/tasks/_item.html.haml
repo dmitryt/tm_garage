@@ -3,6 +3,7 @@
     .b-row
       .b-checkbox
         = f.check_box :finished, :'data-attach-event' => 'change: onFinish'
+        = f.hidden_field :priority_id
       .b-edit
         .i-change-priority{:title => 'change priority', 'data-attach-event' => 'click: onChangePriority'}>
         .delimiter>
@@ -11,9 +12,3 @@
         .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete', 'data-method' => "delete", 'data-url'=> project_task_path(item.project, item)}>
       .b-title{'data-attach-point' => 'title'}
         = item.title
-      .tooltip
-        %ul
-          - Priority.all.each do |pr|
-            %li
-              = radio_button_tag 'task_priority', pr.id, item.priority == pr
-              = label_tag "task_priority_#{pr.id}", pr.title
