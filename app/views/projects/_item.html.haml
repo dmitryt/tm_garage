@@ -7,12 +7,14 @@
       .i-edit{:title => 'edit', 'data-attach-event' => 'click: onEdit', 'data-url'=> edit_project_path(item)}
       .delimiter
       .i-delete{:title => 'delete', 'data-attach-event' => 'click: onDelete', 'data-method' => "delete", 'data-url'=> project_path(item)}
-  .b-project-task-add
-    .i-add
-    = form_for Task.new, :url => project_tasks_path(item), :remote => true, :html => {:id => nil, :class => 'new_task'} do |f|
-      .errors
-      = f.text_field :title, :class => 'b-input', :placeholder => 'Start typing here to create a task...'
-      = f.submit :class => 'b-add-btn', :value => 'Add task'
+  = form_for Task.new, :url => project_tasks_path(item), :remote => true, :html => {:id => nil, :class => 'new_task'} do |f|
+    .b-project-task-add
+      .b-cell.b-cell-left
+        .i-add
+      .b-cell
+        = f.text_field :title, :class => 'b-input', :placeholder => 'Start typing here to create a task...'
+      .b-cell.b-cell-right
+        = f.submit :class => 'b-add-btn', :value => 'Add task'
   .b-project-task-list{'data-attach-point' => 'tasksContainer'}
     - content = render(:partial => 'tasks/item', :collection => item.tasks)
     .h-empty-list{'data-attach-point'=> 'emptyMessage', :class => content ? 'hidden' : ''}

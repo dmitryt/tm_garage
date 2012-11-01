@@ -6,6 +6,7 @@
 
 //= require jquery
 //= require jquery.ui.dialog
+//= require jquery.ui.datepicker
 
 //= require lib/util
 //= require_tree ./lib

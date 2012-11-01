@@ -8,6 +8,7 @@
 	font-family: Arial;
 	font-size: 12px;
 	overflow: hidden;
+	margin: 10px auto 0;
 }
 
 .b-project .h-empty-list {
@@ -29,6 +30,7 @@
 	width: 14px;
 	height: 14px;
 	display: inline-block;
+	cursor: pointer;
 }
 
 .b-project .i-edit {
@@ -57,7 +59,6 @@
 	padding: 0 75px 0 50px;
 	position: relative;
 	color: #fff;
-	cursor: pointer;
 	background: #3c6aa8; /* for non-css3 browsers */
 
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5280b9', endColorstr='#3c5c9d'); /* for IE */
@@ -88,8 +89,24 @@
 
 .b-project-task-add {
 	background-color: #dcdcdc;
-	padding: 8px 15px;
+	padding: 8px 0;
 	position: relative;
+	display: table;
+	width: 100%;
+}
+
+.b-project-task-add .b-cell {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.b-project-task-add .b-cell-left {
+	padding-left: 8px;
+	width: 45px; 
+}
+
+.b-project-task-add .b-cell-right {
+	width: 125px;
 }
 
 .b-project-task-add .b-input,
@@ -105,21 +122,17 @@
 	height: 26px;
 	background-image: url(<%= asset_path 'big_icons.png' %>);
 	background-position: 0 -28px;
-	position: absolute;
-	margin-top: 3px;
 }
 
 .b-project-task-add .b-input {
 	width: 520px;
 	padding: 2px 5px;
-	border-right: 0;
 	border-bottom: 0;
-	margin-left: 40px;
 }
 
 .b-project-task-add .b-add-btn {
 	color: #fff;
-	padding: 2px 27px;
+	width: 110px;
 	border: 1px solid #447557;
 	border-radius: 0 10px 10px 0;
 	-webkit-border-radius: 0 10px 10px 0;
@@ -148,7 +161,6 @@
 	line-height: 50px;
 	color: #acacac;
 	border-bottom: 1px solid #e7ebea;
-	cursor: pointer;
 	position: relative;
 }
 
@@ -184,7 +196,6 @@
 
 .b-project-task-list .h-finished .b-row {
 	background-color: #eee;
-	cursor: default;
 }
 
 .b-project-task-list .h-finished .b-row .b-edit {

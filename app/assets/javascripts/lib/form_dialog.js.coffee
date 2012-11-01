@@ -18,13 +18,16 @@ class FormDialog extends tm.Dialog
 
 	openForm: (opener, options = {}, callback = ->) ->
 		return if !opener
-		df = @ajax.fetchForm(opener)
-		df.done (form) =>
+		df = new $.Deferred()
+		_df = @ajax.fetchForm(opener)
+		_df.done (form) =>
 			@setForm $(form)
 			@_open options, onclickCb
+			df.resolve()
 		onclickCb = =>
 			@ajax.sendForm(@form).done (response) => 
 				@onResponse response, callback
+		df
 
 	openConfirm: (opener, options = {}, content = '', callback = ->) ->
 		@form = null

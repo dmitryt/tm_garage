@@ -1,9 +1,19 @@
-.b-page {
+html, body{
+	padding:0;
+	margin:0;
+	height:100%;
+	position:relative; 
+}
+
+body {
 	background: url(<%= asset_path 'bgd.png' %>) repeat-x;
 	background-color: #ba5d0c;
-	height: 100%;
+}
+
+.b-page {
 	min-height: 700px;
 	position: relative;
+	padding-bottom: 100px;
 	z-index: 1;
 }
 	
@@ -42,6 +52,10 @@
 
 .ui-dialog {
 	font-size: 14px;
+}
+
+.ui-dialog .ui-dialog-content {
+	padding: 8px;
 }
 
 .ui-dialog form .errors {

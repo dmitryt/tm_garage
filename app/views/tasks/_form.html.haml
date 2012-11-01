@@ -1,3 +1,8 @@
 = form_for(@task, :url => project_task_path(@task.project @task)) do |f|
-  = f.label :title
-  = f.text_field :title
+  .row
+    = f.label :title
+    = f.text_field :title
+  %br/
+  .row
+    = f.label :deadline_at
+    = f.text_field :deadline_at, :value => f.object.deadline_at.blank? ? '' : f.object.deadline_at

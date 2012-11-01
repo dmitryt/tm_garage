@@ -7,7 +7,9 @@ class Task extends tm._Templated
 	onEdit: (target) ->
 		args = 
 			title: 'Edit task'
-		@dialog.openForm target, args, (r) => @onSave(r)
+		formOnLoad = @dialog.openForm target, args, (r) => @onSave(r)
+		formOnLoad.done =>
+			$('#task_deadline_at').datepicker({minDate: 0})
 
 	onSave: (data = {}) =>
 		@applyToDOM(data)
@@ -28,7 +30,7 @@ class Task extends tm._Templated
 	_send: ->
 		
 	onFinish: ->
-		form = @getForm
+		form = @getForm()
 		@ajax.sendForm(form).done (r) =>
 			@ajax.onResponse {response: r, form: form}, =>
 				m = if r.data.finished then 'addClass' else 'removeClass'
