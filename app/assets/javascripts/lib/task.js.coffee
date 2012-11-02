@@ -8,7 +8,7 @@ class Task extends tm._Templated
 		args = 
 			title: 'Edit task'
 		formOnLoad = @dialog.openForm target, args, (r) => @onSave(r)
-		formOnLoad.done =>
+		formOnLoad.done ->
 			$('#task_deadline_at').datepicker({minDate: 0})
 
 	onSave: (data = {}) =>
