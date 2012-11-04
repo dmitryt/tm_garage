@@ -36,16 +36,11 @@ class Ajax
 		# Is used only for showing errors, if it's needed
 		err = args.response.errors
 		if (err && err.length != 0)
-			tm.Ajax.showErrors(err, args.form)
+			flash = new tm.Flash()
+			flash.show({type: 'error', message: err.join('<br/>')})
 			return false;
 		callback(args.response.data || args.response)
 		true
-
-	@showErrors: (errors = [], form) ->
-		delimiter = if form then '<br/>' else '\n'
-		v = errors.join(delimiter)
-		return alert(v) if !form
-		form.find('.errors').html v
 
 namespace 'tm', (exports) ->
 	exports.Ajax = Ajax

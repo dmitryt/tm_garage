@@ -13,10 +13,14 @@ class _Templated
 	constructor: (@element, args = {}) ->
 		@dialog = new tm.FormDialog()
 		@ajax = tm.Ajax
+		@flash = new tm.Flash()
 		@initSubwidgets()
 		@_parseEvents()
 		@_parseNodes()
 		$.extend(@, args)
+
+	itemChangeAlert: (action = '') ->
+		@flash.show({type: 'info', message: ['action', {action: action}]})
 
 	_parseNodes: ->
 		@options = {attachPoints: {}}
@@ -50,7 +54,9 @@ class _Templated
 	onDelete: (opener) ->
 		return if !opener
 		content = 'Are you sure you want to delete item?'
-		callback = (response) => @destroy()
+		callback = (response) => 
+			@destroy()
+			@itemChangeAlert('deleted')
 		@dialog.openConfirm(opener, {title: "Delete item"}, content, callback)
 
 	destroy: ->
