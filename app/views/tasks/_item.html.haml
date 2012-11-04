@@ -1,4 +1,4 @@
-%div{'data-attach-widget'=> "tm.Task", :class => item.finished ? 'h-finished' : '', :priority => item.priority_id}
+%div{'data-attach-widget'=> "tm.Task", :class => "b-task #{item.finished ? 'h-finished' : ''}", :priority => item.priority_id}
   = form_for item, :url => project_task_path(item.project, item) do |f|
     .b-row{:style => "background-color: #{item.priority.color}"}
       .b-checkbox
