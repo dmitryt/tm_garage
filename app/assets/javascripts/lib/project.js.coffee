@@ -1,8 +1,7 @@
 class Project extends tm._Templated
 
-	tasks: [],
-
 	constructor: ->
+		@tasks = []
 		super
 		@_initAddTaskForm()
 
@@ -17,10 +16,20 @@ class Project extends tm._Templated
 
 	_initTasks: ->
 		wNodes = $(@element).find('[data-attach-widget="tm.Task"]')
-		@tasks = (@createTask(node) for node in wNodes)
+		(@createTask(node) for node in wNodes)
 
 	createTask: (dom) ->
 		@tasks.push(new tm.Task dom, {project: @})
+
+	reorderTask: (task, priority) ->
+		# Select tasks with a same priority
+		tasks = $(@tasks).filter (i) ->
+			parseInt($(@element).attr('priority')) == priority
+		if (tasks.length != 0)
+			$(task.element).insertAfter(tasks.last().get(0).element)
+		else
+			$(task.element).insertBefore($(@tasks).first().get(0).element)
+		$(task.element).attr('priority', priority);
 
 	onAddTask: ->
 		ap = @options.attachPoints
@@ -31,6 +40,7 @@ class Project extends tm._Templated
 				@createTask node
 				form.get(0).reset
 				@checkEmptyMessage
+				@itemChangeAlert('created')
 
 	onEdit: (target) ->
 		args = 

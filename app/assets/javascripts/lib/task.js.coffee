@@ -8,11 +8,12 @@ class Task extends tm._Templated
 		args = 
 			title: 'Edit task'
 		formOnLoad = @dialog.openForm target, args, (r) => @onSave(r)
-		formOnLoad.done =>
+		formOnLoad.done ->
 			$('#task_deadline_at').datepicker({minDate: 0})
 
 	onSave: (data = {}) =>
 		@applyToDOM(data)
+		@itemChangeAlert('updated')
 
 	onChangePriority: (opener) ->
 		@tooltip.open opener, @
@@ -23,6 +24,8 @@ class Task extends tm._Templated
 		@ajax.sendForm(form).done (r) =>
 			@ajax.onResponse {response: r, form: form}, (data) =>
 				$(@element).find('.b-row').css('background-color', data.priority.color);
+				@project.reorderTask(@, data.priority.id)
+				@itemChangeAlert('updated')
 
 	getForm: ->
 		$(@element).find('form')	
@@ -35,6 +38,7 @@ class Task extends tm._Templated
 			@ajax.onResponse {response: r, form: form}, =>
 				m = if r.data.finished then 'addClass' else 'removeClass'
 				$(@element)[m]('h-finished')
+				@itemChangeAlert('updated')
 
 namespace 'tm', (exports) ->
 	exports.Task = Task

@@ -5,6 +5,7 @@ class Manager
 	constructor: () ->
 		@_initProjects()
 		@dialog = new tm.FormDialog()
+		@flash = new tm.Flash()
 		@_setEventListeners()
 
 	_initProjects: (projects = []) ->
@@ -23,7 +24,8 @@ class Manager
 			title: 'Add project'
 		cb = (r) =>
 			node = $(r).appendTo(@mainContainer)
-			@createProject node	
+			@createProject node
+			@flash.show({message: ['action', {'action': 'created'}], type: 'info'})
 		@dialog.openForm opener, args, (r) => cb(r)
 
 namespace 'tm', (exports) ->

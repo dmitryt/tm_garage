@@ -25,6 +25,9 @@
       .copy
         &copy;&nbsp;Ruby Garage
     #dialog
+    #notification{:style => "display: none"}
+      %div
+        #{'#{text}'}
     #tooltip.tooltip
       %ul
         - Priority.all.each do |pr|

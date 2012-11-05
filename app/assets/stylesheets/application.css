@@ -8,5 +8,6 @@
 
 *= require jquery.ui.dialog
 *= require jquery.ui.datepicker
+*= require jquery.notify
 *= require_tree . 
 */
