@@ -39,7 +39,15 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'capybara'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'spork'
+
+  gem 'guard-rspec'
+  gem 'libnotify' , :require => false if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-inotify', :require => false if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'fuubar'
+  gem 'database_cleaner'
 end

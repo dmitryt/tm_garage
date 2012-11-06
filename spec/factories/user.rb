@@ -1,8 +1,7 @@
 require 'faker'
+require 'factory_girl'
 
-FactoryGirl.define do
-  factory :user do |f|
-	f.username = { Faker::Internet.user_name }
-	f.email = { Faker::Internet.email }
-  end
+Factory.define :user do |f|
+  f.username { Faker::Internet.user_name }
+  f.email { Faker::Internet.email }
 end

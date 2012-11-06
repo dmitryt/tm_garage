@@ -16,8 +16,6 @@
       .b-cell.b-cell-right
         = f.submit :class => 'b-add-btn', :value => 'Add task'
   .b-project-task-list{'data-attach-point' => 'tasksContainer'}
-    - content = render(:partial => 'tasks/item', :collection => item.tasks.group(:priority_id, :title))
-    .h-empty-list{'data-attach-point'=> 'emptyMessage', :class => content ? 'hidden' : ''}
+    .h-empty-list
       The task's list is empty
-    - if content
-      = content
+    = render(:partial => 'tasks/item', :collection => item.tasks.group(:priority_id, :title))

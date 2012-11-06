@@ -1,6 +1,6 @@
-%div{'data-attach-widget'=> "tm.Task", :class => "b-task #{item.finished ? 'h-finished' : ''}", :priority => item.priority_id}
+%div{'data-attach-widget'=> "tm.Task", 'data-item' => "#{item.id}", :class => "b-task #{item.finished ? 'h-finished' : ''}", :priority => item.priority_id}
   = form_for item, :url => project_task_path(item.project, item) do |f|
-    .b-row{:style => "background-color: #{item.priority.color}"}
+    .b-row{:style => "background-color: #{item.priority.color}", 'data-attach-point' => 'rowNode'}
       .b-checkbox
         = f.check_box :finished, :'data-attach-event' => 'change: onFinish'
         = f.hidden_field :priority_id

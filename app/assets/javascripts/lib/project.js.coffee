@@ -23,13 +23,15 @@ class Project extends tm._Templated
 
 	reorderTask: (task, priority) ->
 		# Select tasks with a same priority
-		tasks = $(@tasks).filter (i) ->
-			parseInt($(@element).attr('priority')) == priority
-		if (tasks.length != 0)
-			$(task.element).insertAfter(tasks.last().get(0).element)
-		else
+		nodes = $(@tasks).map (t) =>
+			t.element
+		nodes = nodes.filter (i) =>
+			parseInt(nodes[i].attr('priority')) == priority
+		if (nodes.length != 0)
+			$(task.element).insertAfter($(nodes).last())
+		else if ($(@tasks).index(task) != 0)
 			$(task.element).insertBefore($(@tasks).first().get(0).element)
-		$(task.element).attr('priority', priority);
+		$(task.element).attr('priority', priority)
 
 	onAddTask: ->
 		ap = @options.attachPoints
@@ -38,8 +40,7 @@ class Project extends tm._Templated
 			@ajax.onResponse {response: r, form: form}, =>
 				node = $(r).appendTo(ap.tasksContainer)
 				@createTask node
-				form.get(0).reset
-				@checkEmptyMessage
+				form.get(0).reset()
 				@itemChangeAlert('created')
 
 	onEdit: (target) ->
@@ -55,10 +56,6 @@ class Project extends tm._Templated
 			@finishedContainer.append(task.dom)
 		else
 			@moveTaskToGroup(task, data)
-
-	checkEmptyMessage: ->
-		m = @tasks.length ? 'hide' : 'show';
-		$(@options.attachPoints.emptyContainer)[m];
 
 namespace 'tm', (exports) ->
 	exports.Project = Project

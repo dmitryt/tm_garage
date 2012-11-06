@@ -23,9 +23,12 @@ class Task extends tm._Templated
 		$(form.get(0)['task[priority_id]']).val pValue
 		@ajax.sendForm(form).done (r) =>
 			@ajax.onResponse {response: r, form: form}, (data) =>
-				$(@element).find('.b-row').css('background-color', data.priority.color);
+				$(@options.attachPoints.rowNode).css('background-color', data.priority.color);
 				@project.reorderTask(@, data.priority.id)
 				@itemChangeAlert('updated')
+
+	getPriority: ->
+		$(@element).attr('priority')
 
 	getForm: ->
 		$(@element).find('form')	
