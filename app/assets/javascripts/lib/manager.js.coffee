@@ -1,6 +1,6 @@
 class Manager
 		
-	mainContainer: '#page'
+	mainContainer: '#projectsContainer'
 
 	constructor: () ->
 		@_initProjects()

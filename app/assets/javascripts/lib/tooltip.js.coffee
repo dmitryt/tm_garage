@@ -1,4 +1,5 @@
 class Tooltip
+	# It's priorities' tooltip
 
 	@_instance: null,
 

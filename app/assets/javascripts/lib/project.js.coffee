@@ -19,18 +19,17 @@ class Project extends tm._Templated
 		(@createTask(node) for node in wNodes)
 
 	createTask: (dom) ->
-		@tasks.push(new tm.Task dom, {project: @})
+		new tm.Task dom, {project: @}
 
-	reorderTask: (task, priority) ->
+	reorderTask: (task, priority = task.getPriority()) ->
 		# Select tasks with a same priority
-		nodes = $(@tasks).map (t) =>
-			t.element
-		nodes = nodes.filter (i) =>
-			parseInt(nodes[i].attr('priority')) == priority
-		if (nodes.length != 0)
-			$(task.element).insertAfter($(nodes).last())
-		else if ($(@tasks).index(task) != 0)
-			$(task.element).insertBefore($(@tasks).first().get(0).element)
+		allTasks = $(@element).find('.j-task')
+		tasks = allTasks.filter ->
+			parseInt($(@).attr('priority')) == priority
+		if (tasks.length != 0)
+			$(task.element).insertAfter($(tasks).last())
+		else if ($(allTasks).index(task.element) != 0)
+			$(task.element).insertBefore($(allTasks).first())
 		$(task.element).attr('priority', priority)
 
 	onAddTask: ->
@@ -39,8 +38,8 @@ class Project extends tm._Templated
 		@ajax.sendForm(form).done (r) =>
 			@ajax.onResponse {response: r, form: form}, =>
 				node = $(r).appendTo(ap.tasksContainer)
-				@createTask node
 				form.get(0).reset()
+				@reorderTask(@createTask(node))
 				@itemChangeAlert('created')
 
 	onEdit: (target) ->

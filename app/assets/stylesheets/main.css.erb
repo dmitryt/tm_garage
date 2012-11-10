@@ -2,19 +2,23 @@ html, body{
 	padding:0;
 	margin:0;
 	height:100%;
-	position:relative; 
 }
 
 body {
 	background: url(<%= asset_path 'bgd.png' %>) repeat-x;
 	background-color: #bc6a0b;
+	min-height: 100%;
+	position:relative;
 }
 
 .b-page {
-	min-height: 700px;
 	position: relative;
-	padding-bottom: 100px;
 	z-index: 1;
+	min-height: 100%;
+}
+
+.b-page .h-footer-wrapper {
+	padding-bottom: 100px;
 }
 	
 .b-page-title {
@@ -39,9 +43,9 @@ body {
 
 .b-footer {
 	height: 100px;
-	margin-top: -100px;
 	text-align: center;
 	position: relative;
+	margin-top: -100px;
 	z-index: 2;
 }
 

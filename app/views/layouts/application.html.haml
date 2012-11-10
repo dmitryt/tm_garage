@@ -8,7 +8,7 @@
   = csrf_meta_tag
   = yield :script
   %body
-    .b-page#page
+    .b-page
       - if current_user
         .b-head
           You are logged in as 
@@ -19,7 +19,9 @@
         simple todo lists
         .sub
           from ruby garage
-      = yield
+      #projectsContainer
+        = yield
+      .h-footer-wrapper
     .b-footer
       = yield :footer
       .copy
