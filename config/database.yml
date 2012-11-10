@@ -16,7 +16,11 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgres
+  encoding: utf8
+  database: db_tm_garage_prod
+  username: db_tm_garage_admin
+  password: "35dbcd98d66cb69c"
   pool: 5
   timeout: 5000
+

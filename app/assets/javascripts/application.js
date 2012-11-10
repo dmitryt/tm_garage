@@ -11,5 +11,5 @@
 //= require jquery.ui.datepicker
 //= require jquery.notify
 
-//= require lib/util
-//= require_tree ./lib
+//= require core/util
+//= require_tree ./core
