@@ -5,7 +5,7 @@ html, body{
 }
 
 body {
-	background: url(<%= asset_path 'bgd.png' %>) repeat-x;
+	background: url('bgd.png') repeat-x;
 	background-color: #bc6a0b;
 	min-height: 100%;
 	position:relative;

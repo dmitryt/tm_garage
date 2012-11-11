@@ -18,4 +18,4 @@
   .b-project-task-list{'data-attach-point' => 'tasksContainer'}
     .h-empty-list
       The task's list is empty
-    = render(:partial => 'tasks/item', :collection => item.tasks.group(:priority_id, :title))
+    = render(:partial => 'tasks/item', :collection => item.tasks.sort(:priority_id, :title))

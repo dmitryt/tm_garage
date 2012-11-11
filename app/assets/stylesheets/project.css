@@ -26,7 +26,7 @@
 .b-project .i-edit,
 .b-project .i-delete,
 .b-project .i-change-priority {
-	background-image: url(<%= asset_path 'glyphicons-halflings.png' %>);
+	background-image: url('glyphicons-halflings.png');
 	width: 14px;
 	height: 14px;
 	display: inline-block;
@@ -83,7 +83,7 @@
 	width: 24px;
 	height: 28px;
 	left: 10px;
-	background-image: url(<%= asset_path 'big_icons.png' %>);
+	background-image: url('big_icons.png');
 	top: 5px;
 }
 
@@ -120,7 +120,7 @@
 .b-project-add-btn i {
 	width: 26px;
 	height: 26px;
-	background-image: url(<%= asset_path 'big_icons.png' %>);
+	background-image: url('big_icons.png');
 	background-position: 0 -28px;
 }
 
