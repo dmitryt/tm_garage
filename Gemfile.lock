@@ -93,7 +93,7 @@ GEM
     jquery-ui-rails (2.0.2)
       jquery-rails
       railties (>= 3.1.0)
-    json (1.7.5)
+    json (1.8.6)
     libnotify (0.8.0)
       ffi (>= 1.0.11)
     libv8 (3.3.10.4)
