@@ -66,7 +66,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.1.2)
       i18n (~> 0.5)
-    ffi (1.1.5)
+    ffi (1.11.1)
     fuubar (1.1.0)
       rspec (~> 2.0)
       rspec-instafail (~> 0.2.0)
